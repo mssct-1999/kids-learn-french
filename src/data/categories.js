@@ -105,6 +105,86 @@ export const categories = {
       { word: 'bébé', image: '👶', en: 'baby' },
       { word: 'chien', image: '🐶', en: 'dog' }, // family pet
     ]
+  },
+  vehicles: {
+    name: 'Véhicules',
+    icon: '🚗',
+    words: [
+      { word: 'voiture', image: '🚗', en: 'car' },
+      { word: 'camion', image: '🚚', en: 'truck' },
+      { word: 'bus', image: '🚌', en: 'bus' },
+      { word: 'vélo', image: '🚲', en: 'bicycle' },
+      { word: 'moto', image: '🏍️', en: 'motorcycle' },
+      { word: 'avion', image: '✈️', en: 'airplane' },
+      { word: 'bateau', image: '🚢', en: 'boat' },
+      { word: 'train', image: '🚂', en: 'train' },
+      { word: 'hélicoptère', image: '🚁', en: 'helicopter' },
+      { word: 'fusée', image: '🚀', en: 'rocket' },
+    ]
+  },
+  food: {
+    name: 'Nourriture',
+    icon: '🍕',
+    words: [
+      { word: 'pain', image: '🍞', en: 'bread' },
+      { word: 'fromage', image: '🧀', en: 'cheese' },
+      { word: 'viande', image: '🥩', en: 'meat' },
+      { word: 'poisson', image: '🐟', en: 'fish' },
+      { word: 'œuf', image: '🥚', en: 'egg' },
+      { word: 'riz', image: '🍚', en: 'rice' },
+      { word: 'pâtes', image: '🍝', en: 'pasta' },
+      { word: 'pizza', image: '🍕', en: 'pizza' },
+      { word: 'hamburger', image: '🍔', en: 'hamburger' },
+      { word: 'salade', image: '🥗', en: 'salad' },
+    ]
+  },
+  clothes: {
+    name: 'Vêtements',
+    icon: '👕',
+    words: [
+      { word: 'chemise', image: '👔', en: 'shirt' },
+      { word: 'pantalon', image: '👖', en: 'pants' },
+      { word: 'robe', image: '👗', en: 'dress' },
+      { word: 'jupe', image: '👗', en: 'skirt' },
+      { word: 'chaussures', image: '👟', en: 'shoes' },
+      { word: 'chapeau', image: '🎩', en: 'hat' },
+      { word: 'manteau', image: '🧥', en: 'coat' },
+      { word: 'gants', image: '🧤', en: 'gloves' },
+      { word: 'écharpe', image: '🧣', en: 'scarf' },
+      { word: 'lunettes', image: '🕶️', en: 'glasses' },
+    ]
+  },
+  emotions: {
+    name: 'Émotions',
+    icon: '😊',
+    words: [
+      { word: 'heureux', image: '😊', en: 'happy' },
+      { word: 'triste', image: '😢', en: 'sad' },
+      { word: 'en colère', image: '😠', en: 'angry' },
+      { word: 'surpris', image: '😮', en: 'surprised' },
+      { word: 'fatigué', image: '😴', en: 'tired' },
+      { word: 'effrayé', image: '😱', en: 'scared' },
+      { word: 'excité', image: '🤩', en: 'excited' },
+      { word: 'malade', image: '🤒', en: 'sick' },
+      { word: 'amusé', image: '😂', en: 'amused' },
+      { word: 'calme', image: '😌', en: 'calm' },
+    ]
+  },
+  house: {
+    name: 'Maison',
+    icon: '🏠',
+    words: [
+      { word: 'maison', image: '🏠', en: 'house' },
+      { word: 'porte', image: '🚪', en: 'door' },
+      { word: 'fenêtre', image: '🪟', en: 'window' },
+      { word: 'lit', image: '🛏️', en: 'bed' },
+      { word: 'table', image: '🪑', en: 'table' },
+      { word: 'chaise', image: '🪑', en: 'chair' },
+      { word: 'cuisine', image: '🍳', en: 'kitchen' },
+      { word: 'salle de bain', image: '🛁', en: 'bathroom' },
+      { word: 'jardin', image: '🌳', en: 'garden' },
+      { word: 'garage', image: '🏭', en: 'garage' },
+    ]
   }
 };
 

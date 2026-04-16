@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { categories } from '../data/categories';
 
 const Parent = () => {
   const [stats, setStats] = useState({
     stars: 0,
     streak: 0,
     wordsLearned: 0,
-    lastPlayed: null
+    lastPlayed: null,
+    totalTime: 0,
+    categoryProgress: {}
   });
 
   useEffect(() => {
@@ -14,12 +17,16 @@ const Parent = () => {
     const savedStreak = localStorage.getItem('kidsFrenchStreak') || '0';
     const savedWords = localStorage.getItem('kidsFrenchWordsLearned') || '0';
     const lastPlayed = localStorage.getItem('kidsFrenchLastPlayed');
+    const totalTime = localStorage.getItem('kidsFrenchTotalTime') || '0';
+    const categoryProgress = JSON.parse(localStorage.getItem('kidsFrenchCategoryProgress') || '{}');
 
     setStats({
       stars: parseInt(savedStars),
       streak: parseInt(savedStreak),
       wordsLearned: parseInt(savedWords),
-      lastPlayed: lastPlayed ? new Date(lastPlayed) : null
+      lastPlayed: lastPlayed ? new Date(lastPlayed) : null,
+      totalTime: parseInt(totalTime),
+      categoryProgress
     });
   }, []);
 
@@ -87,12 +94,12 @@ const Parent = () => {
           <h2 className="text-xl font-bold text-gray-800 mb-4">📈 Statistiques récentes</h2>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Temps d'apprentissage</span>
-              <span className="font-semibold">15 min</span>
+              <span className="text-gray-600">Temps d'apprentissage total</span>
+              <span className="font-semibold">{stats.totalTime} min</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Précision moyenne</span>
-              <span className="font-semibold">85%</span>
+              <span className="font-semibold">{stats.wordsLearned > 0 ? Math.round((stats.stars / (stats.wordsLearned * 2)) * 100) : 0}%</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-600">Dernière session</span>
@@ -100,6 +107,54 @@ const Parent = () => {
                 {stats.lastPlayed ? stats.lastPlayed.toLocaleDateString('fr-FR') : 'Aucune'}
               </span>
             </div>
+          </div>
+        </motion.div>
+
+        {/* Category Progress Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white rounded-xl shadow-lg p-6 mb-6"
+        >
+          <h2 className="text-xl font-bold text-gray-800 mb-4">🗺️ Progression par catégorie</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {Object.entries(categories).map(([key, category], index) => {
+              const progress = stats.categoryProgress[key] || 0;
+              const maxProgress = category.words.length;
+              const percentage = Math.min((progress / maxProgress) * 100, 100);
+
+              return (
+                <motion.div
+                  key={key}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 + index * 0.1 }}
+                  className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-3 border border-gray-100"
+                >
+                  <div className="flex items-center mb-2">
+                    <span className="text-2xl mr-2">{category.icon}</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-gray-800">{category.name}</p>
+                      <p className="text-xs text-gray-500">{progress}/{maxProgress} mots</p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <motion.div
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${percentage}%` }}
+                      transition={{ duration: 1, delay: 0.7 + index * 0.1 }}
+                    />
+                  </div>
+                  {percentage >= 100 && (
+                    <div className="text-center mt-1">
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">✅ Complété</span>
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 

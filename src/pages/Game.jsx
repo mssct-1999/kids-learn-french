@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { categories, getCategory } from '../data/categories';
+import confetti from 'canvas-confetti';
 
 // Question types
 const QUESTION_TYPES = {
@@ -62,6 +63,15 @@ const Game = () => {
     audio.load();
   };
 
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6c5ce7']
+    });
+  };
+
   const nextCard = () => {
     if (currentIndex < words.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -75,6 +85,15 @@ const Game = () => {
       // Update streak (simplified - in real app, check consecutive days)
       const currentStreak = parseInt(localStorage.getItem('kidsFrenchStreak') || '0');
       localStorage.setItem('kidsFrenchStreak', (currentStreak + 1).toString());
+
+      // Save category progress
+      const categoryProgress = JSON.parse(localStorage.getItem('kidsFrenchCategoryProgress') || '{}');
+      categoryProgress[currentCategory] = (categoryProgress[currentCategory] || 0) + 1;
+      localStorage.setItem('kidsFrenchCategoryProgress', JSON.stringify(categoryProgress));
+
+      // Save total time spent (estimate 2 minutes per category)
+      const totalTime = parseInt(localStorage.getItem('kidsFrenchTotalTime') || '0');
+      localStorage.setItem('kidsFrenchTotalTime', (totalTime + 2).toString());
 
       generateQuestion();
       setShowQuiz(true);
@@ -154,6 +173,7 @@ const Game = () => {
       setStars(prev => prev + 1);
       setFeedback('correct');
       playAudio('Bravo !');
+      triggerConfetti(); // Add confetti celebration
       setTimeout(() => {
         generateQuestion();
         setFeedback('');
