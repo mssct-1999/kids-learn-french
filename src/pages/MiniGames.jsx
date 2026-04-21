@@ -2,11 +2,16 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { categories } from '../data/categories';
+import Mascot from '../components/Mascot';
+import { PopBubbles, CatchMascot, QuickTapGame } from '../components/InteractiveElements';
 
 const MiniGames = () => {
   const navigate = useNavigate();
   const [selectedGame, setSelectedGame] = useState(null);
   const [memoryGame, setMemoryGame] = useState(null);
+  const [bubbleWords, setBubbleWords] = useState([]);
+  const [gameScore, setGameScore] = useState(0);
+  const [showCompletion, setShowCompletion] = useState(false);
 
   const games = [
     {
@@ -18,27 +23,43 @@ const MiniGames = () => {
       difficulty: 'Facile'
     },
     {
+      id: 'bubble',
+      name: 'Éclate les Bulles',
+      icon: '🫧',
+      description: 'Pop les bulles avec les mots',
+      color: 'from-blue-400 to-cyan-400',
+      difficulty: 'Facile'
+    },
+    {
+      id: 'catch',
+      name: 'Attrape le Mascotte',
+      icon: '🐻',
+      description: 'Attrape le mascotte qui bouge',
+      color: 'from-orange-400 to-yellow-400',
+      difficulty: 'Moyen'
+    },
+    {
+      id: 'quicktap',
+      name: 'Tap Rapide',
+      icon: '⚡',
+      description: 'Clique aussi vite que tu peux',
+      color: 'from-red-400 to-pink-400',
+      difficulty: 'Difficile'
+    },
+    {
       id: 'dragdrop',
       name: 'Glisse-dépose',
       icon: '🎯',
       description: 'Associe les mots aux images',
-      color: 'from-blue-400 to-cyan-400',
+      color: 'from-green-400 to-emerald-400',
       difficulty: 'Moyen'
     },
     {
-      id: 'puzzle',
-      name: 'Puzzle',
-      icon: '🧩',
-      description: 'Reconstitue les mots',
-      color: 'from-green-400 to-emerald-400',
-      difficulty: 'Difficile'
-    },
-    {
-      id: 'quiz',
-      name: 'Quiz Rapide',
-      icon: '⚡',
-      description: 'Questions à choix multiples',
-      color: 'from-yellow-400 to-orange-400',
+      id: 'soundmatch',
+      name: 'Match Audio',
+      icon: '🎵',
+      description: 'Écoute et associe les sons',
+      color: 'from-indigo-400 to-purple-400',
       difficulty: 'Moyen'
     }
   ];
@@ -123,16 +144,54 @@ const MiniGames = () => {
     }));
   };
 
+  const getBubbleWords = () => {
+    const allWords = [];
+    Object.values(categories).forEach(cat => {
+      allWords.push(...cat.words.slice(0, 4));
+    });
+    return allWords.sort(() => 0.5 - Math.random()).slice(0, 8);
+  };
+
+  const startBubbleGame = () => {
+    setBubbleWords(getBubbleWords());
+    setGameScore(0);
+  };
+
+  const handleBubblePop = () => {
+    const newScore = gameScore + 1;
+    setGameScore(newScore);
+    if (newScore === 8) {
+      setShowCompletion(true);
+    }
+  };
+
+  const handleCatchComplete = () => {
+    setGameScore(prev => prev + 1);
+    setShowCompletion(true);
+  };
+
+  const handleQuickTapComplete = () => {
+    setGameScore(prev => prev + 1);
+    setShowCompletion(true);
+  };
+
   const handleGameSelect = (game) => {
     setSelectedGame(game);
     if (game.id === 'memory') {
       startMemoryGame();
+    } else if (game.id === 'bubble') {
+      startBubbleGame();
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 p-4">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-2xl mx-auto">
+        {/* Mascot in corner */}
+        <div className="absolute top-4 right-4 z-20">
+          <Mascot size="sm" isActive={true} autoAnimate={true} type="cat" />
+        </div>
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -176,8 +235,65 @@ const MiniGames = () => {
           ))}
         </div>
 
-        {/* Selected Game Info */}
-        {selectedGame && !memoryGame && (
+        {/* Bubble Pop Game */}
+        {selectedGame?.id === 'bubble' && bubbleWords.length > 0 && !showCompletion && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl shadow-xl p-6 mb-8"
+          >
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">🫧 Éclate les Bulles</h2>
+              <p className="text-gray-600">Éclaté: {gameScore}/8</p>
+            </div>
+            <PopBubbles 
+              words={bubbleWords} 
+              onBubblePop={handleBubblePop}
+              isActive={true}
+            />
+          </motion.div>
+        )}
+
+        {/* Catch Mascot Game */}
+        {selectedGame?.id === 'catch' && !showCompletion && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl shadow-xl p-6 mb-8"
+          >
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">🐻 Attrape le Mascotte</h2>
+              <p className="text-gray-600">Clique vite pour l'attraper!</p>
+            </div>
+            <CatchMascot 
+              mascotEmoji="🐻"
+              onCatch={handleCatchComplete}
+              isActive={true}
+            />
+          </motion.div>
+        )}
+
+        {/* Quick Tap Game */}
+        {selectedGame?.id === 'quicktap' && !showCompletion && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl shadow-xl p-6 mb-8"
+          >
+            <div className="text-center mb-4">
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">⚡ Tap Rapide</h2>
+              <p className="text-gray-600">Clique aussi vite que tu peux!</p>
+            </div>
+            <QuickTapGame 
+              targetCount={10}
+              onComplete={handleQuickTapComplete}
+              isActive={true}
+            />
+          </motion.div>
+        )}
+
+        {/* Selected Game Info (for games not yet implemented) */}
+        {selectedGame && !memoryGame && bubbleWords.length === 0 && selectedGame.id !== 'catch' && selectedGame.id !== 'quicktap' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -197,6 +313,44 @@ const MiniGames = () => {
             >
               Jouer Maintenant
             </motion.button>
+          </motion.div>
+        )}
+
+        {/* Completion Screen */}
+        {showCompletion && selectedGame && selectedGame.id !== 'memory' && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl shadow-xl p-6 text-center mb-8"
+          >
+            <div className="text-6xl mb-4">🎉</div>
+            <h3 className="text-2xl font-bold text-green-600 mb-2">Super Travail!</h3>
+            <p className="text-gray-600 mb-6">Tu as complété le jeu de {selectedGame.name}!</p>
+            <div className="flex justify-center space-x-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  handleGameSelect(selectedGame);
+                  setShowCompletion(false);
+                }}
+                className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full font-bold"
+              >
+                Rejouer
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setSelectedGame(null);
+                  setShowCompletion(false);
+                  setBubbleWords([]);
+                }}
+                className="bg-gray-500 text-white px-6 py-2 rounded-full font-bold"
+              >
+                Menu Jeux
+              </motion.button>
+            </div>
           </motion.div>
         )}
 
@@ -270,7 +424,7 @@ const MiniGames = () => {
               </motion.div>
             )}
 
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-4">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -294,7 +448,7 @@ const MiniGames = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/')}
-          className="w-full bg-white text-gray-700 py-3 rounded-full shadow-lg font-semibold hover:shadow-xl transition-shadow"
+          className="w-full bg-white text-gray-700 py-3 rounded-full shadow-lg font-semibold hover:shadow-xl transition-shadow mt-6"
         >
           Retour à l'accueil
         </motion.button>

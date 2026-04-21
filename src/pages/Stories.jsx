@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Mascot from '../components/Mascot';
 
 const Stories = () => {
   const navigate = useNavigate();
@@ -52,6 +53,11 @@ const Stories = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-orange-50 to-red-100 p-4">
       <div className="max-w-md mx-auto">
+        {/* Mascot in corner */}
+        <div className="absolute top-4 right-4 z-20">
+          <Mascot size="sm" isActive={true} autoAnimate={true} type="rabbit" />
+        </div>
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

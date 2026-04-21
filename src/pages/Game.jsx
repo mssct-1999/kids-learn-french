@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { categories, getCategory } from '../data/categories';
 import confetti from 'canvas-confetti';
+import Mascot from '../components/Mascot';
+import SurpriseReward from '../components/SurpriseReward';
+import { getRewardType, getMascotMessage, MASCOT_REACTIONS } from '../utils/engagementSystem';
 
 // Question types
 const QUESTION_TYPES = {
@@ -21,6 +24,9 @@ const Game = () => {
   const [userInput, setUserInput] = useState('');
   const [feedback, setFeedback] = useState('');
   const [progress, setProgress] = useState(0);
+  const [activeReward, setActiveReward] = useState(null);
+  const [mascotReaction, setMascotReaction] = useState(null);
+  const mascotRef = useRef(null);
 
   // Load category
   useEffect(() => {
@@ -172,23 +178,63 @@ const Game = () => {
     if (isCorrect) {
       setStars(prev => prev + 1);
       setFeedback('correct');
+      
+      // Show mascot reaction
+      setMascotReaction('SUCCESS');
+      
+      // 30% chance for surprise reward
+      const rewardType = getRewardType();
+      if (rewardType) {
+        setActiveReward(rewardType);
+      } else {
+        // Standard confetti
+        triggerConfetti();
+      }
+      
       playAudio('Bravo !');
-      triggerConfetti(); // Add confetti celebration
+      
       setTimeout(() => {
         generateQuestion();
         setFeedback('');
         setUserInput('');
+        setMascotReaction(null);
       }, 2000);
     } else {
       setFeedback('incorrect');
+      
+      // Show mascot reaction for incorrect answer
+      const isSillyMistake = Math.random() > 0.7;
+      setMascotReaction(isSillyMistake ? 'FUNNY_MISTAKE' : 'INCORRECT');
+      
       playAudio('Essaie encore !');
-      setTimeout(() => setFeedback(''), 1500);
+      setTimeout(() => {
+        setFeedback('');
+        setMascotReaction(null);
+      }, 1500);
     }
   };
 
   if (showQuiz) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-blue-50 to-purple-50">
+        {/* Mascot in top corner */}
+        <div className="absolute top-4 right-4 z-10">
+          <Mascot 
+            size="md" 
+            reaction={mascotReaction}
+            isActive={true}
+            autoAnimate={true}
+            type="bear"
+          />
+        </div>
+
+        {/* Surprise Reward */}
+        <SurpriseReward 
+          rewardType={activeReward}
+          isActive={true}
+          onComplete={() => setActiveReward(null)}
+        />
+
         <div className="w-full max-w-md">
           {/* Progress bar */}
           <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
@@ -325,6 +371,17 @@ const Game = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-br from-purple-50 to-pink-50">
+      {/* Mascot in top right */}
+      <div className="absolute top-6 right-6 z-10">
+        <Mascot 
+          size="md" 
+          reaction={mascotReaction}
+          isActive={true}
+          autoAnimate={true}
+          type="bear"
+        />
+      </div>
+
       <div className="w-full max-w-md">        {/* Category Selector */}
         {!showQuiz && currentIndex === 0 && (
           <motion.div
