@@ -14,7 +14,9 @@ import { BearMascot, CatMascot, RabbitMascot, DogMascot, LionMascot } from './Cu
  */
 const Mascot = ({ 
   size = 'md',
-  reaction = 'CHEERING',
+  reaction = null,
+  state = 'idle',
+  message: controlledMessage = '',
   isActive = true,
   onActionComplete = () => {},
   autoAnimate = false,
@@ -24,6 +26,35 @@ const Mascot = ({
   const [currentAction, setCurrentAction] = useState(null);
   const [mood, setMood] = useState('happy');
   const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    const stateMap = {
+      idle: 'happy',
+      happy: 'excited',
+      surprised: 'confused',
+      wrong: 'happy',
+      encouraging: 'happy',
+      dancing: 'excited'
+    };
+
+    setMood(stateMap[state] || 'happy');
+    if (state === 'dancing') {
+      triggerAction(MASCOT_ACTIONS.DANCE);
+    }
+  }, [state]);
+
+  useEffect(() => {
+    if (!controlledMessage) return;
+    setMessage(controlledMessage);
+    setShowMessage(true);
+    const timer = setTimeout(() => setShowMessage(false), 3500);
+    return () => clearTimeout(timer);
+  }, [controlledMessage]);
+
+  useEffect(() => {
+    if (!reaction) return;
+    showReaction(reaction);
+  }, [reaction]);
 
   // Auto-trigger actions every 5-8 seconds
   useEffect(() => {

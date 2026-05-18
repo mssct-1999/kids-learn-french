@@ -20,6 +20,12 @@ export const categories = {
       { word: 'girafe', image: '🦒', en: 'giraffe' },
       { word: 'singe', image: '🐒', en: 'monkey' },
       { word: 'ours', image: '🐻', en: 'bear' },
+      { word: 'grenouille', image: '🐸', en: 'frog' },
+      { word: 'oiseau', image: '🐦', en: 'bird' },
+      { word: 'poisson', image: '🐟', en: 'fish' },
+      { word: 'zèbre', image: '🦓', en: 'zebra' },
+      { word: 'kangourou', image: '🦘', en: 'kangaroo' },
+      { word: 'papillon', image: '🦋', en: 'butterfly' },
     ]
   },
   colors: {
@@ -38,6 +44,12 @@ export const categories = {
       { word: 'gris', image: '🔘', en: 'gray' },
       { word: 'marron', image: '🤎', en: 'brown' },
       { word: 'turquoise', image: '🔵', en: 'turquoise' },
+      { word: 'doré', image: '⭐', en: 'gold' },
+      { word: 'argenté', image: '⚪', en: 'silver' },
+      { word: 'beige', image: '🟤', en: 'beige' },
+      { word: 'clair', image: '💡', en: 'light' },
+      { word: 'foncé', image: '🌑', en: 'dark' },
+      { word: 'multicolore', image: '🌈', en: 'multicolored' },
     ]
   },
   fruits: {
@@ -56,6 +68,12 @@ export const categories = {
       { word: 'mangue', image: '🥭', en: 'mango' },
       { word: 'kiwi', image: '🥝', en: 'kiwi' },
       { word: 'citron', image: '🍋', en: 'lemon' },
+      { word: 'pastèque', image: '🍉', en: 'watermelon' },
+      { word: 'melon', image: '🍈', en: 'melon' },
+      { word: 'myrtille', image: '🫐', en: 'blueberry' },
+      { word: 'noix de coco', image: '🥥', en: 'coconut' },
+      { word: 'avocat', image: '🥑', en: 'avocado' },
+      { word: 'tomate', image: '🍅', en: 'tomato' },
     ]
   },
   numbers: {
@@ -72,6 +90,12 @@ export const categories = {
       { word: 'huit', image: '8️⃣', en: 'eight' },
       { word: 'neuf', image: '9️⃣', en: 'nine' },
       { word: 'dix', image: '🔟', en: 'ten' },
+      { word: 'onze', image: '1️⃣1️⃣', en: 'eleven' },
+      { word: 'douze', image: '1️⃣2️⃣', en: 'twelve' },
+      { word: 'treize', image: '1️⃣3️⃣', en: 'thirteen' },
+      { word: 'quatorze', image: '1️⃣4️⃣', en: 'fourteen' },
+      { word: 'quinze', image: '1️⃣5️⃣', en: 'fifteen' },
+      { word: 'vingt', image: '2️⃣0️⃣', en: 'twenty' },
     ]
   },
   body: {
@@ -88,6 +112,12 @@ export const categories = {
       { word: 'mains', image: '👐', en: 'hands' },
       { word: 'jambes', image: '🦵', en: 'legs' },
       { word: 'pieds', image: '🦶', en: 'feet' },
+      { word: 'doigts', image: '☝️', en: 'fingers' },
+      { word: 'dents', image: '🦷', en: 'teeth' },
+      { word: 'langue', image: '👅', en: 'tongue' },
+      { word: 'dos', image: '🚶', en: 'back' },
+      { word: 'ventre', image: '🤰', en: 'belly' },
+      { word: 'genou', image: '🦵', en: 'knee' },
     ]
   },
   family: {
@@ -104,6 +134,12 @@ export const categories = {
       { word: 'frère', image: '👨‍👦', en: 'brother' },
       { word: 'bébé', image: '👶', en: 'baby' },
       { word: 'chien', image: '🐶', en: 'dog' }, // family pet
+      { word: 'parents', image: '👪', en: 'parents' },
+      { word: 'cousin', image: '🧒', en: 'cousin' },
+      { word: 'cousine', image: '👧', en: 'female cousin' },
+      { word: 'tante', image: '👩', en: 'aunt' },
+      { word: 'oncle', image: '👨', en: 'uncle' },
+      { word: 'famille', image: '👨‍👩‍👧‍👦', en: 'family' },
     ]
   },
   vehicles: {
@@ -120,6 +156,12 @@ export const categories = {
       { word: 'train', image: '🚂', en: 'train' },
       { word: 'hélicoptère', image: '🚁', en: 'helicopter' },
       { word: 'fusée', image: '🚀', en: 'rocket' },
+      { word: 'tracteur', image: '🚜', en: 'tractor' },
+      { word: 'taxi', image: '🚕', en: 'taxi' },
+      { word: 'ambulance', image: '🚑', en: 'ambulance' },
+      { word: 'camion de pompiers', image: '🚒', en: 'fire truck' },
+      { word: 'trottinette', image: '🛴', en: 'scooter' },
+      { word: 'tramway', image: '🚋', en: 'tram' },
     ]
   },
   food: {
@@ -136,6 +178,12 @@ export const categories = {
       { word: 'pizza', image: '🍕', en: 'pizza' },
       { word: 'hamburger', image: '🍔', en: 'hamburger' },
       { word: 'salade', image: '🥗', en: 'salad' },
+      { word: 'soupe', image: '🍲', en: 'soup' },
+      { word: 'carotte', image: '🥕', en: 'carrot' },
+      { word: 'brocoli', image: '🥦', en: 'broccoli' },
+      { word: 'gâteau', image: '🍰', en: 'cake' },
+      { word: 'glace', image: '🍦', en: 'ice cream' },
+      { word: 'lait', image: '🥛', en: 'milk' },
     ]
   },
   clothes: {
@@ -152,6 +200,12 @@ export const categories = {
       { word: 'gants', image: '🧤', en: 'gloves' },
       { word: 'écharpe', image: '🧣', en: 'scarf' },
       { word: 'lunettes', image: '🕶️', en: 'glasses' },
+      { word: 'chaussettes', image: '🧦', en: 'socks' },
+      { word: 'short', image: '🩳', en: 'shorts' },
+      { word: 't-shirt', image: '👕', en: 't-shirt' },
+      { word: 'pull', image: '🧥', en: 'sweater' },
+      { word: 'bottes', image: '🥾', en: 'boots' },
+      { word: 'pyjama', image: '👚', en: 'pajamas' },
     ]
   },
   emotions: {
@@ -168,6 +222,12 @@ export const categories = {
       { word: 'malade', image: '🤒', en: 'sick' },
       { word: 'amusé', image: '😂', en: 'amused' },
       { word: 'calme', image: '😌', en: 'calm' },
+      { word: 'fier', image: '😎', en: 'proud' },
+      { word: 'timide', image: '☺️', en: 'shy' },
+      { word: 'curieux', image: '🤔', en: 'curious' },
+      { word: 'inquiet', image: '😟', en: 'worried' },
+      { word: 'content', image: '🙂', en: 'glad' },
+      { word: 'endormi', image: '😪', en: 'sleepy' },
     ]
   },
   house: {
@@ -184,6 +244,12 @@ export const categories = {
       { word: 'salle de bain', image: '🛁', en: 'bathroom' },
       { word: 'jardin', image: '🌳', en: 'garden' },
       { word: 'garage', image: '🏭', en: 'garage' },
+      { word: 'chambre', image: '🛏️', en: 'bedroom' },
+      { word: 'salon', image: '🛋️', en: 'living room' },
+      { word: 'toit', image: '🏠', en: 'roof' },
+      { word: 'escalier', image: '🪜', en: 'stairs' },
+      { word: 'lampe', image: '💡', en: 'lamp' },
+      { word: 'canapé', image: '🛋️', en: 'sofa' },
     ]
   }
 };
@@ -198,4 +264,4 @@ export const getCategory = (key) => categories[key];
 export const getRandomCategory = () => {
   const keys = categoryKeys;
   return categories[keys[Math.floor(Math.random() * keys.length)]];
-};
+};  

@@ -4,6 +4,7 @@
 
 // Surprise reward types (30% trigger rate)
 export const SURPRISE_REWARDS = {
+  STARS: 'stars',
   TREASURE_CHEST: 'treasure_chest',
   MASCOT_DANCE: 'mascot_dance',
   FLOATING_BALLOONS: 'floating_balloons',
@@ -84,15 +85,25 @@ export const MASCOT_ACTIONS = {
   }
 };
 
-// Get random surprise reward (70% normal, 30% surprise)
-export const getRewardType = () => {
-  const random = Math.random();
-  if (random > 0.7) {
-    const rewards = Object.values(SURPRISE_REWARDS);
-    return rewards[Math.floor(Math.random() * rewards.length)];
-  }
-  return null;
+const SIMPLE_REWARDS = [
+  SURPRISE_REWARDS.CONFETTI_BURST,
+  SURPRISE_REWARDS.STARS,
+  SURPRISE_REWARDS.MASCOT_DANCE
+];
+
+const SPECIAL_REWARDS = [
+  SURPRISE_REWARDS.BUBBLES_POP,
+  SURPRISE_REWARDS.TREASURE_CHEST,
+  SURPRISE_REWARDS.FLOATING_BALLOONS
+];
+
+// 70% simple feedback, 30% special surprise.
+export const getRandomReward = () => {
+  const rewards = Math.random() < 0.7 ? SIMPLE_REWARDS : SPECIAL_REWARDS;
+  return rewards[Math.floor(Math.random() * rewards.length)];
 };
+
+export const getRewardType = getRandomReward;
 
 // Get random mascot message
 export const getMascotMessage = (reactionType = 'SUCCESS') => {
